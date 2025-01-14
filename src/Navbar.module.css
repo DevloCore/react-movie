@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    padding: 8px 32px 8px 32px;
+    margin:0;
+    align-items: center;
+    gap: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    margin-right: 32px;
+}
+
+.link {
+    padding-inline: 2px;
+    color: white;
+    cursor: pointer;
+    border-bottom: 1px solid white;
+}
+
+.link:hover {
+    color: #888;
+}
