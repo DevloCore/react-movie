@@ -5,7 +5,6 @@
     padding: 20px;
     background-color: #121212;
     color: white;
-    min-height: 100vh;
   }
   
   .poster {
@@ -61,4 +60,49 @@
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.9em;
+  }
+
+  .poster {
+    width: 300px;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  
+  .castContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .castCard {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 150px;
+  }
+  
+  .castImage {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .similarContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    padding: 15px;
+  }
+  
+  .similarCard {
+    text-align: center;
+    color: white;
+  }
+  
+  .similarImage {
+    width: 100%;
+    border-radius: 10px;
   }

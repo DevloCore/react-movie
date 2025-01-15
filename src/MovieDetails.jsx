@@ -7,12 +7,13 @@ const MovieDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [movie, setMovie] = useState(null);
-    const API_URL = `https://api.themoviedb.org/3/movie/${id}?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5`;
+    const API_KEY = "9995ccfe9d6d3c53afa2cbc8530a25f5";
+    const API_URL = `https://api.themoviedb.org/3/movie/${id}`;
   
     useEffect(() => {
-        fetch(API_URL)
+        fetch(API_URL + `?api_key=${API_KEY}&append_to_response=credits,similar`)
         .then((response) => response.json())
-        .then((data) => setMovie(data))
+        .then((data) => {setMovie(data); console.log(data); })
         .catch((error) => console.error('Error while loading:', error));
     }, [id]);
 
@@ -29,6 +30,7 @@ const MovieDetails = () => {
       };
   
     return (
+      <>
       <div className={styles.container}>
         <div className={styles.poster}>
           <img
@@ -79,6 +81,42 @@ const MovieDetails = () => {
           </button>
         </div>
       </div>
+
+
+      <h2 style={{textAlign:'center'}}>Cast</h2>
+        <div className={styles.castContainer}>
+          {movie.credits.cast.slice(0, 10).map((person) => (
+            <div key={person.id} className={styles.castCard}>
+              <img
+                src={
+                  person.profile_path
+                    ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+                    : 'https://via.placeholder.com/150'
+                }
+                alt={person.name}
+                className={styles.castImage}
+              />
+              <p>{person.name}</p>
+              <p style={{ fontSize: '14px', color: '#888' }}>{person.character}</p>
+            </div>
+          ))}
+        </div>
+
+
+        <h2 style={{textAlign:'center'}}>Similar Movies</h2>
+      <div className={styles.similarContainer}>
+        {movie.similar.results.map((similar) => (
+          <div key={similar.id} className={styles.similarCard}>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${similar.poster_path}`}
+              alt={similar.title}
+              className={styles.similarImage}
+            />
+            <p>{similar.title}</p>
+          </div>
+        ))}
+      </div>
+      </>
     );
   };
   

@@ -6,11 +6,12 @@ const Movies = () => {
     const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
     const [query, setQuery] = useState('');
+    const [debouncedQuery, setDebouncedQuery] = useState('');
     const [category, setCategory] = useState('popular');
 
     const fetchMovies = (category) => {
       const url = query ?
-        `https://api.themoviedb.org/3/search/movie?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5&query=${query}` :
+        `https://api.themoviedb.org/3/search/movie?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5&query=${debouncedQuery}` :
         `https://api.themoviedb.org/3/movie/${category}?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5`;
 
       fetch(url)
@@ -21,8 +22,16 @@ const Movies = () => {
     };
 
     useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedQuery(query);
+      }, 500);
+  
+      return () => clearTimeout(handler);
+    }, [query]);
+
+    useEffect(() => {
         fetchMovies(category);
-    }, [category, query]);
+    }, [category, debouncedQuery]);
     
 
     const handleMovieClick = (id) => {
@@ -31,7 +40,7 @@ const Movies = () => {
 
     return (
         <div>
-          <h1 style={{ textAlign: 'center' }}>Popular Movies</h1>
+          <h1 style={{ textAlign: 'center' }}>Welcome to React Movie</h1>
 
           <div className={styles.searchBar}>
             <input
