@@ -13,7 +13,7 @@ const MovieDetails = () => {
     useEffect(() => {
         fetch(API_URL + `?api_key=${API_KEY}&append_to_response=credits,similar`)
         .then((response) => response.json())
-        .then((data) => {setMovie(data); console.log(data); })
+        .then((data) => {setMovie(data); })
         .catch((error) => console.error('Error while loading:', error));
     }, [id]);
 
