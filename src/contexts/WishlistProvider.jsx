@@ -1,19 +1,30 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
     const [wishlist, setWishlist] = useState([]);
 
+    useEffect(() => {
+        const localWishlist = localStorage.getItem("wishlist");
+        if (localWishlist) {
+            setWishlist(JSON.parse(localWishlist));
+        }
+    }, []);
+
     const addToWishlist = (movie) => {
         setWishlist((prev) => {
-            return [...prev, movie];
+            const modified = [...prev, movie];
+            localStorage.setItem("wishlist", JSON.stringify(modified));
+            return modified;
         });
     };
 
     const removeFromWishlist = (movieId) => {
         setWishlist((prev) => {
-            return prev.filter((movie) => movie.id !== movieId);
+            const filtered = prev.filter((movie) => movie.id !== movieId);
+            localStorage.setItem("wishlist", JSON.stringify(filtered));
+            return filtered;
         });
     };
 

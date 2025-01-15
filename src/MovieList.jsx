@@ -5,14 +5,25 @@ import { useNavigate } from 'react-router';
 const Movies = () => {
     const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
+    const [query, setQuery] = useState('');
+    const [category, setCategory] = useState('popular');
+
+    const fetchMovies = (category) => {
+      const url = query ?
+        `https://api.themoviedb.org/3/search/movie?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5&query=${query}` :
+        `https://api.themoviedb.org/3/movie/${category}?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5`;
+
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          setMovies(data.results);
+      });
+    };
 
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=9995ccfe9d6d3c53afa2cbc8530a25f5')
-            .then(response => response.json())
-            .then(data => {
-                setMovies(data.results);
-            });
-    }, []);
+        fetchMovies(category);
+    }, [category, query]);
+    
 
     const handleMovieClick = (id) => {
         navigate(`/movie/${id}`);
@@ -21,8 +32,27 @@ const Movies = () => {
     return (
         <div>
           <h1 style={{ textAlign: 'center' }}>Popular Movies</h1>
+
+          <div className={styles.searchBar}>
+            <input
+                type="text"
+                placeholder="Search for a movie..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+          </div>
+
+          <div className={styles.buttons}>
+            <button onClick={() => setCategory('now_playing')}>Now Playing</button>
+            <button onClick={() => setCategory('popular')}>Popular</button>
+            <button onClick={() => setCategory('top_rated')}>Top Rated</button>
+            <button onClick={() => setCategory('upcoming')}>Upcoming</button>
+          </div>
+
+          {movies.length === 0 && <div style={{ textAlign: 'center', color: 'white' }}>No result !<hr/></div>}
           <div className={styles.container}>
-            {movies.map((movie) => (
+            {movies.length > 0 && movies.map((movie) => (
               <div key={movie.id} className={styles.card} onClick={() => handleMovieClick(movie.id)}>
                 <img
                   className={styles.image}
