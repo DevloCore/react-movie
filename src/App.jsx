@@ -1,18 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import Home from "./Home"
 import Navbar from "./Navbar"
-import Movies from "./Movies"
+import MovieList from "./MovieList"
+import { WishlistProvider } from "./contexts/WishlistProvider"
+import MovieDetails from "./MovieDetails"
+import Wishlist from "./Wishlist"
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-      <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-        </Routes>
-      </BrowserRouter>
+      <WishlistProvider>
+        <BrowserRouter>
+        <Navbar />
+          <Routes>
+            <Route path="/" element={<MovieList />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/movie/:id" element={<MovieDetails />} />
+          </Routes>
+        </BrowserRouter>
+      </WishlistProvider>
     </>
   )
 }

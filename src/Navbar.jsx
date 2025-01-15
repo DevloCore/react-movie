@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
         <h1 className={styles.title}>React Movie</h1>
-        <Link to="/" className={styles.link}>Home</Link>
-        <Link to="/movies" className={styles.link}>Movies</Link>
+        <Link to="/" className={styles.link}>Movies</Link>
+        <Link to="/wishlist" className={styles.link}>Wishlist</Link>
     </div>
   )
 }
